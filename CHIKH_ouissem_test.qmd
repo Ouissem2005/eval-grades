@@ -204,7 +204,7 @@ course_id_to_filter <- courses |>
 
 average_grades <- grades|>
   filter(course_id == course_id_to_filter) |>
-  left_join(students |> select(id, group), by = "id")|>
+  left_join(student |> select(id, group), by = "id")|>
   group_by(group) |>
   summarize(
     Average_Grade = mean(grade, na.rm = TRUE),
@@ -271,7 +271,7 @@ grades_per_student <- grades|>
     .groups = 'drop'
   )
 
-final_grades_summary <- students |>
+final_grades_summary <- student |>
   left_join(grades_per_student, by = "id") |>
   mutate(N_Grades = replace_na(N_Grades, 0)) |>
   select(id, sex, group, N_Grades) 
@@ -310,7 +310,7 @@ grades_per_student <- grades|>
     .groups = 'drop'
   )
 
-final_grades_summary <- students |>
+final_grades_summary <- student |>
   left_join(grades_per_student, by = "id") |>
   mutate(N_Grades = replace_na(N_Grades, 0)) |>
   select(id, sex, group, N_Grades) 
@@ -343,7 +343,7 @@ grades_count_vr <- grades|>
   group_by(id) |>
   summarize(N_Grades = n(), .groups = 'drop')
 
-students_grades_vr <- students|>
+students_grades_vr <- student|>
   left_join(grades_count_vr, by = "id") |>
   mutate(N_Grades = replace_na(N_Grades, 0))|>
   select(id, group, -sex, -birth_date, N_Grades)
@@ -402,7 +402,7 @@ grades |>
   ) |>
   filter(!is.na(grade)) 
 
-students_grades_combined <- students|>
+students_grades_combined <- student|>
   select(id, group, sex) |>
   left_join(grades, by = "id") |>
   mutate(
@@ -453,7 +453,7 @@ average_grade_summary |>
 #q19. 
 
 ```{r}
-students <- vroom(here("subject-3/students.csv"))|> select(id, group)
+student <- vroom(here("subject-3/students.csv"))|> select(id, group)
 courses <- vroom(here("subject-3/courses.csv")) |> select(course_id, course)
 grades <- read_delim("subject-3/grades.csv", delim = "|", show_col_types = FALSE) |>
   mutate(grade = as.numeric(grade)) |>
@@ -473,7 +473,7 @@ avg_grades_wide <- avg_grades_long |>
     values_from = Avg_Grade    
   )
 
-final_student_summary <- students |>
+final_student_summary <- student |>
   left_join(avg_grades_wide, by = "id")
 
 course_col_1 <- "Interstellar Travel and Navigation"
@@ -486,5 +486,6 @@ final_student_summary |>
 ```
 
 #q20. 
+
 
 
