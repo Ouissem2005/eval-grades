@@ -295,4 +295,50 @@ final_grades_summary|>
 
 ```
 
+##Q14. 
+
+```{r}
+grades_by_semester <- grades |>
+  left_join(courses|> select(course_id, semester), by = "course_id") |>
+  mutate(semester = as.factor(semester), grade = as.numeric(grade)) |>
+  filter(!is.na(grade), !is.na(semester))
+
+grades_per_student <- grades|>
+  group_by(id) |>
+  summarize(
+    N_Grades = n(),
+    .groups = 'drop'
+  )
+
+final_grades_summary <- students |>
+  left_join(grades_per_student, by = "id") |>
+  mutate(N_Grades = replace_na(N_Grades, 0)) |>
+  select(id, sex, group, N_Grades) 
+
+plot_grade_count_distribution <- final_grades_summary |>
+  mutate(Sex = as.factor(sex))|>
+  ggplot(aes(x = Sex, y = N_Grades, fill = Sex)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution du nombre de notes reçues par étudiant selon le sexe",
+    x = "Sexe",
+    y = "Nombre Total de Notes Reçues"
+  ) +
+  theme_minimal()
+
+plot_grade_count_distribution
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
