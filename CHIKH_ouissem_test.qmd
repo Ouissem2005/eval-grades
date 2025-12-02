@@ -3,6 +3,10 @@ title: "CHIKH_ouissem_test"
 author: "Ouissem Chikh"
 format: html
 ---
+
+LINK to the github: https://github.com/Ouissem2005/eval-grades.git
+
+
 #1.1. Study organisation
 
 ##q1. 
@@ -127,6 +131,18 @@ student|>
 
 ##Q8.
 
+```{r}
+student|>
+   mutate(
+    age = time_length(today() - birth_date, unit = "year"),
+    age = round(age)  
+  )|>
+  group_by(group) |>
+  summarize(
+    Median_Age = round(median(age, na.rm = TRUE)),
+    .groups = 'drop'
+  )|>knitr::kable()
+```
 
 
 
