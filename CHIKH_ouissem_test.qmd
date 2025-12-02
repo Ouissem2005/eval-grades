@@ -144,6 +144,21 @@ student|>
   )|>knitr::kable()
 ```
 
+##Q9. 
+
+```{r}
+student|>
+   mutate(
+    age = time_length(today() - birth_date, unit = "year"),
+    age = round(age)  
+  )|>
+  group_by(group)|>
+  slice_max(order_by = age, n = 1, with_ties = FALSE)|>
+  select(id, sex, age, group)|>
+  arrange(desc(age))|>
+  ungroup()|>
+  knitr::kable()
+```
 
 
 
