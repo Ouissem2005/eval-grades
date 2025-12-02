@@ -232,7 +232,31 @@ plot_average_grades
 ```
 
 
+##Q12. 
 
+
+```{r}
+grades_by_semester <- grades |>
+  left_join(courses|> select(course_id, semester), by = "course_id") |>
+  mutate(semester = as.factor(semester), grade = as.numeric(grade)) |>
+  filter(!is.na(grade), !is.na(semester))
+
+plot_grade_distribution <- grades_by_semester |>
+  ggplot(aes(x = grade, fill = semester)) +
+  geom_density(alpha = 0.5, size = 1) + 
+  labs(
+    title = "Comparaison de la Distribution des Notes par Semestre",
+    x = "Notes",
+    y = "Densité",
+    fill = "Semestre"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("1" = "pink", "2" = "orange")) + 
+  scale_color_manual(values = c("1" = "pink", "2" = "orange"))
+
+plot_grade_distribution
+```
+##Q13.
 
 
 
