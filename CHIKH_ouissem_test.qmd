@@ -258,5 +258,41 @@ plot_grade_distribution
 ```
 ##Q13.
 
+```{r}
+grades_by_semester <- grades |>
+  left_join(courses|> select(course_id, semester), by = "course_id") |>
+  mutate(semester = as.factor(semester), grade = as.numeric(grade)) |>
+  filter(!is.na(grade), !is.na(semester))
+
+grades_per_student <- grades|>
+  group_by(id) |>
+  summarize(
+    N_Grades = n(),
+    .groups = 'drop'
+  )
+
+final_grades_summary <- students |>
+  left_join(grades_per_student, by = "id") |>
+  mutate(N_Grades = replace_na(N_Grades, 0)) |>
+  select(id, sex, group, N_Grades) 
+
+grade_statistics <- final_grades_summary |>
+  summarize(
+    Minimum = min(N_Grades),
+    Maximum = max(N_Grades),
+    Moyenne = mean(N_Grades),
+    Médiane = median(N_Grades)
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Statistique",
+    values_to = "Nombre de Notes"
+  )
+final_grades_summary|>
+  slice_tail(n=10)|>
+  knitr::kable()
+            
+
+```
 
 
