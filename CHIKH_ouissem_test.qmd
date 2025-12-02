@@ -104,12 +104,28 @@ ggplot(group_counts, aes(x = group, y = n, fill='blue')) +
 ##Q6:
 
 ```{r}
-students |>
+student |>
   ggplot(aes(x = group, fill = sex)) +
   geom_bar(position = "fill") 
 ```
 
 ##Q7. 
+
+```{r}
+library(lubridate)
+```
+```{r}
+student|>
+   mutate(
+    age = time_length(today() - birth_date, unit = "year"),
+    age = round(age)  
+  )|>
+  ggplot(aes(x = age)) +
+  geom_histogram(bins = 15,
+    fill = "steelblue")
+```
+
+##Q8.
 
 
 
