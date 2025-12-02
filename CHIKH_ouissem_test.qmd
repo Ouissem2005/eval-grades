@@ -3,4 +3,35 @@ title: "CHIKH_ouissem_test"
 author: "Ouissem Chikh"
 format: html
 ---
+#Study organisation
 
+##q1. 
+
+```{r}
+here::i_am("TEST.Rproj")
+library(here)
+library(vroom)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(readr)
+```
+
+```{r}
+courses<-vroom(here("subject-3/courses.csv"))
+```
+alternatively we can use 'read_delim': 
+
+```{r}
+fixing_columns <- read_delim(here("subject-3/courses.csv"),
+  delim = ","
+)
+```
+
+we also check the column types: 
+
+```{r}
+spec(courses)
+```
+
+##q2.
