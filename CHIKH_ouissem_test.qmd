@@ -3,7 +3,7 @@ title: "CHIKH_ouissem_test"
 author: "Ouissem Chikh"
 format: html
 ---
-#Study organisation
+#1.1. Study organisation
 
 ##q1. 
 
@@ -48,13 +48,22 @@ courses|>rename(
 ```
 
 
+##1.2. students 
 
+##q3. 
 
+```{r}
+student<-vroom(here("subject-3/students.csv"))
 
+student|>
+  mutate(
+    birth_date = as.Date(birth_date),
+    sex = as.factor(sex)
+  )
 
-
-
-
+spec(student)
+```
+The birth_date column of the students data frame is of classe Date and the sex is identified as a factor.
 
 
 
