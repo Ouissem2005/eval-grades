@@ -83,6 +83,36 @@ grades <- read_delim(here("subject-3", "grades.csv"),
 )
 ```
 
+#2. 
+
+##Q5. 
+
+```{r}
+group_counts <- student |>
+  count(group)
+
+ggplot(group_counts, aes(x = group, y = n, fill='blue')) +
+  geom_col() +
+  labs(
+    title = "Number of Students per Group",
+    x = "Group",
+    y = "Number of Students"
+  ) +
+  theme_minimal()
+```
+
+##
+
+
+
+
+
+
+
+
+
+
+
 
 
 
