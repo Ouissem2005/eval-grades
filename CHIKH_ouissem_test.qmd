@@ -450,6 +450,41 @@ average_grade_summary |>
 
 
 ```
+#q19. 
 
+```{r}
+students <- vroom(here("subject-3/students.csv"))|> select(id, group)
+courses <- vroom(here("subject-3/courses.csv")) |> select(course_id, course)
+grades <- read_delim("subject-3/grades.csv", delim = "|", show_col_types = FALSE) |>
+  mutate(grade = as.numeric(grade)) |>
+  filter(!is.na(grade)) 
+
+avg_grades_long <- grades|>
+  left_join(courses, by = "course_id")|>
+  group_by(id, course) |>
+  summarize(
+    Avg_Grade = mean(grade, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+avg_grades_wide <- avg_grades_long |>
+  pivot_wider(
+    names_from = course,       
+    values_from = Avg_Grade    
+  )
+
+final_student_summary <- students |>
+  left_join(avg_grades_wide, by = "id")
+
+course_col_1 <- "Interstellar Travel and Navigation"
+course_col_2 <- "Xenobiology and Extraterrestrial Life"
+
+final_student_summary |>
+  head(n = 5) |>
+  select(id, group, !!sym(course_col_1), !!sym(course_col_2))|>
+  knitr::kable()
+```
+
+#q20. 
 
 
