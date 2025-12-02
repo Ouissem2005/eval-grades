@@ -101,8 +101,15 @@ ggplot(group_counts, aes(x = group, y = n, fill='blue')) +
   theme_minimal()
 ```
 
-##
+##Q6:
 
+```{r}
+students |>
+  ggplot(aes(x = group, fill = sex)) +
+  geom_bar(position = "fill") 
+```
+
+##Q7. 
 
 
 
