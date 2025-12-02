@@ -376,13 +376,80 @@ grades_distribution |>
 
 
 ```
+##Q17.
+
+```{r}
+students_grades_vr |>
+  mutate(group = as.factor(group)) |>
+  ggplot(aes(x = group, y = N_Grades, fill = group)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution du nombre de notes par groupe pour le cours Virtual
+Reality and Simulated Environments",
+    x = "Groupe d'étudiants",
+    y = "Nombre total de notes obtenues"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+#q18. 
+
+```{r}
+grades |>
+  mutate(
+    grade = as.numeric(grade)
+  ) |>
+  filter(!is.na(grade)) 
+
+students_grades_combined <- students|>
+  select(id, group, sex) |>
+  left_join(grades, by = "id") |>
+  mutate(
+    group = as.factor(group),
+    sex = as.factor(sex)
+  )
+
+average_grade_summary <- students_grades_combined |>
+  group_by(group, sex) |>
+  summarize(
+    N_Grades = n(), 
+    Average_Grade = mean(grade, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+average_grade_summary |>
+  mutate(
+    `Note Moyenne` = round(Average_Grade, 2)
+  ) |>
+  rename(
+    Groupe = group,
+    Sexe = sex,
+    `Nbre de Notes` = N_Grades
+  ) 
+
+average_grade_summary <- students_grades_combined |>
+  group_by(group, sex) |>
+  summarize(
+    Average_Grade = mean(grade, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+
+average_grade_summary |>
+  ggplot(aes(x = group, y = Average_Grade, fill = sex)) +
+  geom_boxplot()+
+  labs(
+    title = "Note Moyenne Générale par Groupe et Sexe",
+    x = "Groupe d'Étudiants",
+    y = "Note Moyenne",
+    fill = "Sexe"
+  ) +
+  theme_minimal()
 
 
 
-
-
-
-
+```
 
 
 
