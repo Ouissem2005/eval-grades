@@ -35,3 +35,30 @@ spec(courses)
 ```
 
 ##q2.
+
+```{r}
+courses|>rename(
+    "course name" = course,            
+    "identifier" = course_id,
+    "semester" = semester,
+    "number of grades" = nb_grades
+  )|>
+  arrange(courses)|>
+  knitr::kable()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
