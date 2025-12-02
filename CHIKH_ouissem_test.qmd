@@ -329,8 +329,33 @@ plot_grade_count_distribution <- final_grades_summary |>
 plot_grade_count_distribution
 ```
 
+##q15.
 
 
+```{r}
+target_course_name <- "Virtual Reality and Simulated Environments"
+target_course_id <- courses |>
+  filter(course == target_course_name) |>
+  pull(course_id) 
+
+grades_count_vr <- grades|>
+  filter(course_id == target_course_id) |>
+  group_by(id) |>
+  summarize(N_Grades = n(), .groups = 'drop')
+
+students_grades_vr <- students|>
+  left_join(grades_count_vr, by = "id") |>
+  mutate(N_Grades = replace_na(N_Grades, 0))|>
+  select(id, group, -sex, -birth_date, N_Grades)
+
+students_grades_vr|>
+  slice_tail(n=10)|>
+  knitr::kable()
+
+```
+
+
+#q16:
 
 
 
