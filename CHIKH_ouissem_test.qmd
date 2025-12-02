@@ -161,7 +161,21 @@ student|>
 ```
 
 
+#3. 
 
+##Q10. 
+
+```{r}
+total_grades<-grades|>
+  mutate(grade_numeric = as.numeric(grade))|>
+  summarise(
+    total_non_missing = sum(!is.na(grade_numeric))
+  ) |>
+  pull(total_non_missing) #
+
+num_grades <- total_grades    
+```
+The data set contains `r num_grades` grades.
 
 
 
